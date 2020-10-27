@@ -8,8 +8,9 @@ lista = []
 
 while continuar != "sair":
     voltarMenu = " "
-    print("1 - adcionar livros\n2 - atualizar quantidade de livros\n3 - sair")
-    escolha = int(input("Oque voce deseja? "))
+    print("1 - Adcionar livros\n2 - Atualizar quantidade de livros \n6 - Buscar livros \n7 - Importar dados \n"+
+        "8 - Obter status de um livro \n9 - Gerar relatório \n10 - Sair")
+    escolha = int(input("O que voce deseja? "))
     if escolha == 1:
         while voltarMenu != "menu":
             livro = biblioteca.cadastroDeLivros()
@@ -32,7 +33,7 @@ while continuar != "sair":
                       f"Ele é {l['fisicoOuEletronico']}\n"
                       f"Lançado em {l['anoLancamento']}")
 
-    elif escolha == 6:
+    elif escolha == 6: #buscar livros
         escolha = str(input('Como você quer buscar o livro? [ano, titulo, autor, assunto] ').lower())
         if escolha == 'ano':
             ano = int(input('Digite o ano para a pesquisa: '))
@@ -44,24 +45,88 @@ while continuar != "sair":
         elif escolha == 'titulo':
             titulo = input('Insira o titulo do livro: ').lower()
             for l in livros:
-                if titulo in l['nome']:
+                if titulo in l['nome'].lower():
                     lista.append(l['nome'])
             print(lista)
             lista.clear
         elif escolha == 'autor':
             autor = input('Insira o autor do livro: ').lower()
             for l in livros:
-                if autor in l['autor']:
+                if autor in l['autor'].lower():
                     lista.append(l['nome'])
             print(lista)
             lista.clear
         elif escolha == 'assunto':
             assunto = input('Insira o assunto do livro: ').lower()
             for l in livros:
-                if assunto in l['assunto']:
+                if assunto in l['assunto'].lower():
                     lista.append(l['nome'])
             print(lista)
             lista.clear
+        
+    elif escolha == 7: #importar dados
+        pass
 
+    elif escolha == 8: #obter status do livro
+        titulo = input('Insira o titulo do livro para saber sua situação: ').lower
+        for l in livros:
+                if titulo == l['nome']:
+                    print(f"Situação do livro {l['nome']}\n"
+                      f"Quantidade disponível: {l['quantidade']}\n")
+
+    elif escolha == 9:
+        print('1 - Gerar relatório do acervo \n2 - Gerar relatório por categoria \n'+
+                        '3 - Gerar relatório por assunto')
+        escolha = int(input('O que você deseja? '))
+        if escolha == 1:
+            print('Gerando relatório...')
+            relatorio = open('Relatório do Acervo.txt', 'w')
+            relatorio.writelines('RELATÓRIO DO ACERVO DA MORAIS LIBRARY \n\n')
+            
+            for l in livros:
+                relatorio.writelines(f"Livro: {l['nome']} \n"+
+                                f"    Autor: {l['autor']}\n"+
+                                f"    Tipo: {l['fisicoOuEletronico']}\n"+
+                                f"    Ano da Edição: {l['anoLancamento']}\n"+
+                                f"    Assunto: {l['assunto']}\n"+
+                                f"    Quantidade: {l['quantidade']}\n"
+                )
+
+            print('Relatório gerado com sucesso!!')
+        elif escolha == 2:
+            escolha = input('Digite a categoria a ser gerado o relatório: ').lower()
+            print('Gerando relatório...')
+            relatorio = open(f'Relatório - Categoria {escolha}.txt', 'w')
+            relatorio.write(f'RELATÓRIO SOBRE A CATEGORIA {escolha.upper()}')
+
+            for l in livros:
+                if escolha == l['categoria']:
+                    relatorio.write(f"Livro: {l['nome']} \n"+
+                                f"    Autor: {l['autor']}\n"+
+                                f"    Tipo: {l['fisicoOuEletronico']}\n"+
+                                f"    Ano da Edição: {l['ano']}\n"+
+                                f"    Assunto: {l['assunto']}\n"+
+                                f"    Quantidade: {l['quantidade']}\n"
+                )
+            
+            print('Relatório gerado com sucesso!!')
+
+    elif escolha == 3:
+        escolha = input('Digite o assunto a ser gerado o relatório: ').lower()
+        print('Gerando relatório...')
+        relatorio = open(f'Relatório - Assunto {escolha}.txt', 'w')
+        relatorio.write(f'RELATÓRIO SOBRE O ASSUNTO {escolha.upper()}')       
+        for l in livros:
+            if escolha == l['assunto']:
+                relatorio.write(f"Livro: {l['nome']} \n"+
+                            f"    Autor: {l['autor']}\n"+
+                            f"    Tipo: {l['fisicoOuEletronico']}\n"+
+                            f"    Ano da Edição: {l['ano']}\n"+
+                            f"    Assunto: {l['assunto']}\n"+
+                            f"    Quantidade: {l['quantidade']}\n"
+            )
         
-        
+        print('Relatório gerado com sucesso!!')
+
+    elif escolha == 10:
+        continuar = 'sair'
