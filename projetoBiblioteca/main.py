@@ -8,23 +8,20 @@ lista = []
 
 while continuar != "sair":
     voltarMenu = " "
-    print("1 - Adcionar livros\n2 - Atualizar quantidade de livros\n3 -  Remover titulos do acervo"
+    print("1 - Adcionar livros\n2 - Atualizar quantidade de livros\n3 - Remover titulos do acervo"
           "\n4 - Mostrar dados do livro\n5 - Buscar por exemplares[ano, titulo, autor, assunto]"
-          "\n6 - Importar dados \n7 - Obter status de um livro \n8 - Gerar relatórios \n10 - Sair")
+          "\n6 - Importar dados \n7 - Obter status de um livro \n8 - Gerar relatórios \n9 - Alugar livro\n10 - Sair")
     escolha = int(input("O que voce deseja? "))
     if escolha == 1:
         while voltarMenu != "menu":
             livro = biblioteca.cadastroDeLivros()
             livros.append(livro.copy())
-            voltarMenu = str(input("Digite menu para voltar ao menu ou ENTER para continuar ").lower())
+            voltarMenu = str(input("Digite MENU para voltar ao menu ou ENTER para continuar ").lower())
 
     elif escolha == 2:
         nome = str(input("Qual nome do livro que você quer mudar a quantidade?: "))
         valor = int(input("Novo valor de quantidade do livro: "))
-        for l in livros:
-            if l["nome"] == nome:
-                l["quantidade"] = valor
-                print(f" O livro: {l['nome']} atualizou o valor para {l['quantidade']}")
+        biblioteca.atualizarQuantidade(nome, valor, livros)
 
     elif escolha == 3:
         print("Deseja remover titulos do acervo por:"
@@ -59,87 +56,98 @@ while continuar != "sair":
                 if titulo in l['nome'].lower():
                     lista.append(l['nome'])
             print(lista)
-            lista.clear
+            lista.clear()
         elif escolha == 'autor':
             autor = input('Insira o autor do livro: ').lower()
             for l in livros:
                 if autor in l['autor'].lower():
                     lista.append(l['nome'])
             print(lista)
-            lista.clear
+            lista.clear()
         elif escolha == 'assunto':
             assunto = input('Insira o assunto do livro: ').lower()
             for l in livros:
                 if assunto in l['assunto'].lower():
                     lista.append(l['nome'])
             print(lista)
-            lista.clear
+            lista.clear()
 
     elif escolha == 6:  # importar dados
         pass
 
     elif escolha == 7:  # obter status do livro
-        titulo = input('Insira o titulo do livro para saber sua situação: ').lower
+        titulo = str(input('Insira o titulo do livro para saber sua situação: ').lower())
         for l in livros:
-            if titulo == l['nome']:
-                print(f"Situação do livro {l['nome']}\n"
-                      f"Quantidade disponível: {l['quantidade']}\n")
+            if l['nome'] == titulo:
+                print(f"Situação do livro {l['nome']} é:\n"
+                      f"A Quantidade disponível: {l['quantidade']}\n"
+                      f"Esta alugado? :  {l['alugado']}\n"
+                      f"Fim do Aluguel {l['dataAluguel']}")
 
     elif escolha == 8:
         print('1 - Gerar relatório do acervo \n2 - Gerar relatório por categoria \n' +
               '3 - Gerar relatório por assunto')
         escolha3 = int(input('O que você deseja? '))
         if escolha3 == 1:
-            print('Gerando relatório...')
-            relatorio = open('relatorio do acervo.txt', 'w', encoding="utf8")
-            relatorio.writelines('RELATÓRIO DO ACERVO DA MORAIS LIBRARY \n\n')
 
+            print('Gerando relatório...')
+            relatorio = open('relatorioDoAcervo.txt', 'w', encoding="utf8")
+            relatorio.writelines('RELATÓRIO DO ACERVO DA MORAIS LIBRARY \n\n')
             for l in livros:
-                if l["fisicoOuEletronico"] == "eletronico":
-                    l['quantidade'] = "Livro em formato Eletronico"
                 relatorio.writelines(f"Livro: {l['nome']} \n" +
                                      f"    Autor: {l['autor']}\n" +
                                      f"    Tipo: {l['fisicoOuEletronico']}\n" +
                                      f"    Ano da Edição: {l['anoLancamento']}\n" +
                                      f"    Assunto: {l['assunto']}\n" +
-                                     f"    Quantidade: {l['quantidade']}\n"
+                                     f"    Quantidade: {l['quantidade']}\n" +
+                                     f"    Alugado:  {l['alugado']}\n" +
+                                     f"    Fim do Aluguel {l['dataAluguel']}"
                                      )
             relatorio.close()
             print('Relatório gerado com sucesso!!')
-        elif escolha3 == 2:
-            escolha3 = input('Digite a categoria a ser gerado o relatório: ').lower()
-            print('Gerando relatório...')
-            relatorio = open(f'Relatório - Categoria {escolha3}.txt', 'w', encoding="utf8")
-            relatorio.write(f'RELATÓRIO SOBRE A CATEGORIA {escolha3.upper()}\n')
 
+        elif escolha3 == 2:
+            escolha4 = input('Digite a categoria a ser gerado o relatório: [A CATEGORIA -NAO FORNECIDO- É O PADRÃO'
+                             ' CASO NÃO TENHAM CADASTRADO NENHUMA]').lower()
+            print('Gerando relatório...')
+            relatorio = open(f'Relatório - Categoria {escolha4}.txt', 'w', encoding="utf8")
+            relatorio.write(f'RELATÓRIO SOBRE A CATEGORIA {escolha4.upper()}\n\n')
             for l in livros:
-                if escolha3 == l['categoria']:
-                    relatorio.write(f"Livro: {l['nome']} \n" +
+                if escolha4 == l['categoria']:
+                    relatorio.write(f"    Livro: {l['nome']} \n" +
                                     f"    Autor: {l['autor']}\n" +
                                     f"    Tipo: {l['fisicoOuEletronico']}\n" +
                                     f"    Ano da Edição: {l['ano']}\n" +
                                     f"    Assunto: {l['assunto']}\n" +
-                                    f"    Quantidade: {l['quantidade']}\n"
+                                    f"    Quantidade: {l['quantidade']}\n" +
+                                    f"    Alugado:  {l['alugado']}\n" +
+                                    f"    Fim do Aluguel {l['dataAluguel']}"
                                     )
-
+            relatorio.close()
             print('Relatório gerado com sucesso!!')
 
         elif escolha3 == 3:
-            escolha3 = input('Digite o assunto a ser gerado o relatório: ').lower()
+            escolha5 = input('Digite o assunto a ser gerado o relatório: ').lower()
             print('Gerando relatório...')
-            relatorio = open(f'Relatório - Assunto {escolha3}.txt', 'w', encoding="utf8")
-            relatorio.write(f'RELATÓRIO SOBRE O ASSUNTO {escolha3.upper()}')
+            relatorio = open(f'Relatório - Assunto {escolha5}.txt', 'w', encoding="utf8")
+            relatorio.write(f'RELATÓRIO SOBRE O ASSUNTO {escolha5.upper()}\n\n')
             for l in livros:
-                if escolha3 == l['assunto']:
+                if escolha5 == l['assunto']:
                     relatorio.write(f"Livro: {l['nome']} \n" +
                                     f"    Autor: {l['autor']}\n" +
                                     f"    Tipo: {l['fisicoOuEletronico']}\n" +
-                                    f"    Ano da Edição: {l['ano']}\n" +
+                                    f"    Ano da Edição: {l['anoLancamento']}\n" +
                                     f"    Assunto: {l['assunto']}\n" +
-                                    f"    Quantidade: {l['quantidade']}\n"
+                                    f"    Quantidade: {l['quantidade']}\n" +
+                                    f"    Alugado:  {l['alugado']}\n" +
+                                    f"    Fim do Aluguel {l['dataAluguel']}"
                                     )
-
+            relatorio.close()
             print('Relatório gerado com sucesso!!')
+
+    elif escolha == 9:
+        biblioteca.alugarLivro(livros)
 
     elif escolha == 10:
         continuar = 'sair'
+print(livros)
