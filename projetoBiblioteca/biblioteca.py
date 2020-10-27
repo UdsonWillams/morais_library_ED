@@ -60,7 +60,9 @@ def removerTitulos(desejo, lista):
 def alugarLivro(lista):
     nome = str(input("Qual o nome do livro desejado para o aluguel? "))
     for v in lista:
-        if v["nome"] == nome:
+        if v["fisicoOuEletronico"] == "eletronico":
+            print("Livro eletronico, não pode ser alugado")
+        elif v["nome"] == nome and v["fisicoOuEletronico"] == "fisico":
             if v["alugavel"] == "sim":
                 v["alugado"] = "sim"
                 data = str(input("Diga a data de retorno do livro[EM FORMATO DD/MM/ANO]"))
