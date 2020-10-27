@@ -29,19 +29,3 @@ def categoriaETematica(dicionario):
 
 def atualizarAcervo(dicionario):
     dicionario["quantidade"] = int(input("Qual a nova quantidade? "))
-
-
-def removerTitulos(desejo, lista):
-    nomes = []
-    if desejo == 1:
-        ano = int(input("Qual o ano desejado para a remoção? "))
-        for v in lista:
-            if v["fisicoOuEletronico"] <= ano:
-                v.clear()
-        print(f"Titulos do ano de {ano} removidos")
-    elif desejo == 2:
-        nome = str(input("Qual o nome do livro desejado para a remoção? "))
-        for v in lista:
-            if v["nome"] == nome:
-                v.clear()
-        print(f"Titulos com nome de {nome} removidos")
