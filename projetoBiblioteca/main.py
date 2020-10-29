@@ -7,15 +7,15 @@ voltarMenu = " "
 lista = []
 
 
-def mostrarLivro(livro):
-    return f"Livro: {livro['nome']} \n"
-    f"    Autor: {livro['autor']}\n"
-    f"    Tipo: {livro['fisicoOuEletronico']}\n"
-    f"    Ano da Edição: {livro['anoLancamento']}\n"
-    f"    Assunto: {livro['assunto']}\n"
-    f"    Quantidade: {livro['quantidade']}\n"
-    f"    Alugado:  {livro['alugado']}\n"
-    f"    Fim do Aluguel {livro['dataAluguel']}"
+def escreveInfoLivro(relatorio, livro):
+    return relatorio.write(f"Livro: {livro[biblioteca.NOME]} \n" +
+                           f"    Autor: {livro[biblioteca.AUTOR]}\n" +
+                           f"    Tipo: {livro[biblioteca.FISICO_OU_ELETRONICO]}\n" +
+                           f"    Ano da Edição: {livro[biblioteca.ANO_LANCAMENTO]}\n" +
+                           f"    Assunto: {livro[biblioteca.ASSUNTO]}\n" +
+                           f"    Quantidade: {livro[biblioteca.QUANTIDADE]}\n" +
+                           f"    Alugado:  {livro[biblioteca.ALUGADO]}\n" +
+                           f"    Fim do Aluguel {livro[biblioteca.DATA_ALUGUEL]}")
 
 
 while continuar != "sair":
@@ -115,7 +115,7 @@ while continuar != "sair":
             relatorio = open('relatorioDoAcervo.txt', 'w', encoding="utf8")
             relatorio.writelines('RELATÓRIO DO ACERVO DA MORAIS LIBRARY \n\n')
             for l in livros:
-                relatorio.writelines(mostrarLivro(l))
+                escreveInfoLivro(relatorio, l)
             relatorio.close()
             print('Relatório gerado com sucesso!!')
 
@@ -127,7 +127,7 @@ while continuar != "sair":
             relatorio.write(f'RELATÓRIO SOBRE A CATEGORIA {escolha4.upper()}\n\n')
             for l in livros:
                 if escolha4 == l['categoria']:
-                    relatorio.write(mostrarLivro(l))
+                    escreveInfoLivro(relatorio, l)
             relatorio.close()
             print('Relatório gerado com sucesso!!')
 
@@ -138,7 +138,7 @@ while continuar != "sair":
             relatorio.write(f'RELATÓRIO SOBRE O ASSUNTO {escolha5.upper()}\n\n')
             for l in livros:
                 if escolha5 == l['assunto']:
-                    relatorio.write(mostrarLivro(l))
+                    escreveInfoLivro(relatorio, l)
             relatorio.close()
             print('Relatório gerado com sucesso!!')
 
