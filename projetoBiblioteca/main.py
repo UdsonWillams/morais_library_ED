@@ -8,9 +8,18 @@ lista = []
 
 while continuar != "sair":
     voltarMenu = " "
-    print("1 - Adcionar livros\n2 - Atualizar quantidade de livros\n3 - Remover titulos do acervo"
-          "\n4 - Mostrar dados do livro\n5 - Buscar por exemplares[ano, titulo, autor, assunto]"
-          "\n6 - Importar dados \n7 - Obter status de um livro \n8 - Gerar relatórios \n9 - Alugar livro\n10 - Sair")
+    print("""
+    1 - Adcionar livros
+    2 - Atualizar quantidade de livros
+    3 - Remover titulos do acervo
+    4 - Mostrar dados do livro
+    5 - Buscar por exemplares[ano, titulo, autor, assunto]
+    6 - Importar dados 
+    7 - Obter status de um livro 
+    8 - Gerar relatórios 
+    9 - Alugar livro
+    10 - Sair
+    """)
     escolha = int(input("O que voce deseja? "))
     if escolha == 1:
         while voltarMenu != "menu":
