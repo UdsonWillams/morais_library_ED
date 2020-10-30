@@ -12,6 +12,7 @@ RESERVAVEL = "reservavel"
 ALUGAVEL = "alugavel"
 NOME = "nome"
 
+
 def cadastroDeLivros():
     livrosCadastro = dict()
 
