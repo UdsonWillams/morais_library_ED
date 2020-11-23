@@ -1,4 +1,5 @@
 import json
+
 TEMATICA = "tematica"
 QUANTIDADE = 'quantidade'
 FISICO_OU_ELETRONICO = "fisicoOuEletronico"
@@ -13,10 +14,11 @@ RESERVAVEL = "reservavel"
 ALUGAVEL = "alugavel"
 NOME = "nome"
 
+
 def menu():
     print("""
          |============================================================|
-         |            SEJA BEM VINDO A MORAIS LIBRARY                 |
+         |                SEJA BEM VINDO A MORAIS LIBRARY             |
          |============================================================|
          |  1 - Adcionar livros                                       |
          |  2 - Atualizar quantidade de livros                        |
@@ -27,10 +29,11 @@ def menu():
          |  7 - Obter status de um livro                              |
          |  8 - Gerar relatórios                                      |
          |  9 - Alugar livro                                          |
-         |  10 - importar dados                                       |
-         |  11 - Sair                                                 |  
+         |  10 - Sair                                                 |
+         |                                                            |  
          |============================================================|
            """)
+
 
 def cadastroDeLivros():
     livrosCadastro = dict()
@@ -57,10 +60,11 @@ def cadastroDeLivros():
         categoriaETematica(livrosCadastro)
     elif cat_tem == "n":
         livrosCadastro[CATEGORIA] = "NAO FORNECIDO"
+        livrosCadastro[TEMATICA] = "NAO FORNECIDO"
         print("Livro cadastrado com sucesso!")
 
-
     return livrosCadastro
+
 
 def escreveInfoLivro(relatorio, livro):
     return relatorio.write(f"Livro: {livro[NOME]} \n" +
@@ -70,7 +74,8 @@ def escreveInfoLivro(relatorio, livro):
                            f"    Assunto: {livro[ASSUNTO]}\n" +
                            f"    Quantidade: {livro[QUANTIDADE]}\n" +
                            f"    Alugado:  {livro[ALUGADO]}\n" +
-                           f"    Fim do Aluguel {livro[DATA_ALUGUEL]}")
+                           f"    Fim do Aluguel {livro[DATA_ALUGUEL]}\n")
+
 
 def categoriaETematica(dicionario):
     dicionario[CATEGORIA] = str(input("Qual a categoria deste livro? "))
@@ -118,7 +123,6 @@ def alugarLivro(lista):
 
 
 def escreverJson(dado):
-
     with open('arquivo.json', 'w', encoding='utf8') as f:
         json.dump(dado, f, ensure_ascii=False, sort_keys=True, indent=4, separators=(',', ':'))
 

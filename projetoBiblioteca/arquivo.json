@@ -1,0 +1,14 @@
+{
+    "alugado":"sim",
+    "alugavel":"sim",
+    "anoLancamento":"2009",
+    "assunto":"drama",
+    "autor":"jose pedro",
+    "categoria":"NAO FORNECIDO",
+    "dataAluguel":"SEM DADOS",
+    "fisicoOuEletronico":"fisico",
+    "nome":"jose",
+    "quantidade":"10",
+    "reservavel":"nao",
+    "tematica":"NAO FORNECIDO"
+}
