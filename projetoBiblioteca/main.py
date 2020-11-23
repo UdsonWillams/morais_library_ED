@@ -1,5 +1,6 @@
-import biblioteca
-import telaLogin
+import projetoBiblioteca.biblioteca
+import projetoBiblioteca.telaLogin
+
 
 livro = dict()
 livros = list()
@@ -7,48 +8,38 @@ continuar = " "
 voltarMenu = " "
 lista = []
 
+dicionario = {
+    'NOME': 'jose',
+    'TEMATICA'
+    'FÍSICO OU ELETRONICO': 'sim',
+    'ALUGAVEL': 'sim',
+    'ALUGADO': 'SIM',
+    'RESERVAVEL': 'nao',
+    'QUANTIDADE DE LIVROS': '10',
+    'ANO LANÇAMENTO': '2009',
+    'AUTOR': 'josé pedro',
+    'ASSUNTO': 'drama'
 
-def escreveInfoLivro(relatorio, livro):
-    return relatorio.write(f"Livro: {livro[biblioteca.NOME]} \n" +
-                           f"    Autor: {livro[biblioteca.AUTOR]}\n" +
-                           f"    Tipo: {livro[biblioteca.FISICO_OU_ELETRONICO]}\n" +
-                           f"    Ano da Edição: {livro[biblioteca.ANO_LANCAMENTO]}\n" +
-                           f"    Assunto: {livro[biblioteca.ASSUNTO]}\n" +
-                           f"    Quantidade: {livro[biblioteca.QUANTIDADE]}\n" +
-                           f"    Alugado:  {livro[biblioteca.ALUGADO]}\n" +
-                           f"    Fim do Aluguel {livro[biblioteca.DATA_ALUGUEL]}")
+}
 
+iniciar = projetoBiblioteca.telaLogin.login()
 
-iniciar = telaLogin.login()
 if iniciar is True:
     while continuar != "sair":
         voltarMenu = " "
-        print("""
-        SEJA BEM VINDO A MORAIS LIBRARY
-        
-        1 - Adcionar livros
-        2 - Atualizar quantidade de livros
-        3 - Remover titulos do acervo
-        4 - Mostrar dados do livro
-        5 - Buscar por exemplares[ano, titulo, autor, assunto]
-        6 - Importar dados 
-        7 - Obter status de um livro 
-        8 - Gerar relatórios 
-        9 - Alugar livro
-        10 - Sair
-        """)
+        projetoBiblioteca.biblioteca.menu()
 
         escolha = int(input("O que voce deseja? "))
         if escolha == 1:
             while voltarMenu != "menu":
-                livro = biblioteca.cadastroDeLivros()
+                livro = projetoBiblioteca.biblioteca.cadastroDeLivros()
                 livros.append(livro.copy())
                 voltarMenu = str(input("Digite MENU para voltar ao menu ou ENTER para continuar ").lower())
 
         elif escolha == 2:
             nome = str(input("Qual nome do livro que você quer mudar a quantidade?: "))
             valor = int(input("Novo valor de quantidade do livro: "))
-            biblioteca.atualizarQuantidade(nome, valor, livros)
+            projetoBiblioteca.biblioteca.atualizarQuantidade(nome, valor, livros)
 
         elif escolha == 3:
             print("Deseja remover titulos do acervo por:"
@@ -56,9 +47,9 @@ if iniciar is True:
                   "\n2 - Por titulo")
             desejo2 = int(input("Qual você deseja fazer? "))
             if desejo2 == 1:
-                biblioteca.removerTitulos(desejo2, livros)
+                projetoBiblioteca.biblioteca.removerTitulos(desejo2, livros)
             if desejo2 == 2:
-                biblioteca.removerTitulos(desejo2, livros)
+                projetoBiblioteca.biblioteca.removerTitulos(desejo2, livros)
 
         elif escolha == 4:
             nome = str(input("Qual nome do livro que você quer ver os dados?: "))
@@ -121,7 +112,7 @@ if iniciar is True:
                 relatorio = open('relatorioDoAcervo.txt', 'w', encoding="utf8")
                 relatorio.writelines('RELATÓRIO DO ACERVO DA MORAIS LIBRARY \n\n')
                 for l in livros:
-                    escreveInfoLivro(relatorio, l)
+                    projetoBiblioteca.biblioteca.escreveInfoLivro(relatorio, l)
                 relatorio.close()
                 print('Relatório gerado com sucesso!!')
 
@@ -133,7 +124,7 @@ if iniciar is True:
                 relatorio.write(f'RELATÓRIO SOBRE A CATEGORIA {escolha4.upper()}\n\n')
                 for l in livros:
                     if escolha4 == l['categoria']:
-                        escreveInfoLivro(relatorio, l)
+                        projetoBiblioteca.biblioteca.escreveInfoLivro(relatorio, l)
                 relatorio.close()
                 print('Relatório gerado com sucesso!!')
 
@@ -144,12 +135,18 @@ if iniciar is True:
                 relatorio.write(f'RELATÓRIO SOBRE O ASSUNTO {escolha5.upper()}\n\n')
                 for l in livros:
                     if escolha5 == l['assunto']:
-                        escreveInfoLivro(relatorio, l)
+                        projetoBiblioteca.biblioteca.escreveInfoLivro(relatorio, l)
                 relatorio.close()
                 print('Relatório gerado com sucesso!!')
 
         elif escolha == 9:
-            biblioteca.alugarLivro(livros)
+            projetoBiblioteca.biblioteca.alugarLivro(livros)
 
         elif escolha == 10:
+            projetoBiblioteca.biblioteca.escreverJson(livros)
+            dados = projetoBiblioteca.biblioteca.lerJson()
+            livros.append(dados)
+            print('Os dados adicionados foram', dados)
+
+        elif escolha == 11:
             continuar = 'sair'
