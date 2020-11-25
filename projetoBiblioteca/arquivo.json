@@ -8,7 +8,7 @@
     "dataAluguel":"SEM DADOS",
     "fisicoOuEletronico":"fisico",
     "nome":"jose",
-    "quantidade":"10",
+    "quantidade":10,
     "reservavel":"nao",
     "tematica":"NAO FORNECIDO"
 }

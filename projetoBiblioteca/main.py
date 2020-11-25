@@ -13,7 +13,7 @@ dicionario = {
     'fisicoOuEletronico': 'fisico',
     'alugavel': 'sim',
     'reservavel': 'nao',
-    'quantidade': '10',
+    'quantidade': 10,
     'anoLancamento': '2009',
     'autor': 'jose pedro',
     'assunto': 'drama',

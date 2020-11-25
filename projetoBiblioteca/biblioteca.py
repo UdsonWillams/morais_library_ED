@@ -50,7 +50,7 @@ def cadastroDeLivros():
         livrosCadastro[ALUGAVEL] = str(input("Este livro é alugavel?: "))
         livrosCadastro[RESERVAVEL] = str(input("Este livro é reservavel?: "))
         livrosCadastro[QUANTIDADE] = int(input("Quantidade de livros: "))
-    livrosCadastro[ANO_LANCAMENTO] = int(input("Qual o ano de lançamento: "))
+    livrosCadastro[ANO_LANCAMENTO] = str(input("Qual o ano de lançamento: "))
     livrosCadastro[AUTOR] = str(input("Qual o autor do livro? "))
     livrosCadastro[ASSUNTO] = str(input("Qual o assunto do livro? "))
     livrosCadastro[ALUGADO] = "nao"
@@ -67,14 +67,17 @@ def cadastroDeLivros():
 
 
 def escreveInfoLivro(relatorio, livro):
-    return relatorio.write(f"Livro: {livro[NOME]} \n" +
-                           f"    Autor: {livro[AUTOR]}\n" +
-                           f"    Tipo: {livro[FISICO_OU_ELETRONICO]}\n" +
-                           f"    Ano da Edição: {livro[ANO_LANCAMENTO]}\n" +
-                           f"    Assunto: {livro[ASSUNTO]}\n" +
-                           f"    Quantidade: {livro[QUANTIDADE]}\n" +
-                           f"    Alugado:  {livro[ALUGADO]}\n" +
-                           f"    Fim do Aluguel {livro[DATA_ALUGUEL]}\n")
+    if livro[NOME] == "LIVRO EXCLUIDO":
+        pass
+    else:
+        return relatorio.write(f"Livro: {livro[NOME]} \n" +
+                               f"    Autor: {livro[AUTOR]}\n" +
+                               f"    Tipo: {livro[FISICO_OU_ELETRONICO]}\n" +
+                               f"    Ano da Edição: {livro[ANO_LANCAMENTO]}\n" +
+                               f"    Assunto: {livro[ASSUNTO]}\n" +
+                               f"    Quantidade: {livro[QUANTIDADE]}\n" +
+                               f"    Alugado:  {livro[ALUGADO]}\n" +
+                               f"    Fim do Aluguel {livro[DATA_ALUGUEL]}\n")
 
 
 def categoriaETematica(dicionario):
@@ -96,6 +99,7 @@ def removerTitulos(desejo, lista):
             for v in lista:
                 if v[ANO_LANCAMENTO] == ano:
                     v.clear()
+                    v[NOME] = "LIVRO EXCLUIDO"
                     v[FISICO_OU_ELETRONICO] = "Item excluido do acervo"
             ano -= 1
         print(f"Titulos até o ano de {ano} removidos")
@@ -104,6 +108,7 @@ def removerTitulos(desejo, lista):
         for v in lista:
             if v[NOME] == nome:
                 v.clear()
+                v[NOME] = "LIVRO EXCLUIDO"
         print(f"Titulos com nome de {nome} removidos")
 
 
@@ -112,14 +117,15 @@ def alugarLivro(lista):
     for v in lista:
         if v[FISICO_OU_ELETRONICO] == "eletronico":
             print("Livro eletronico, não pode ser alugado")
-        elif v[NOME] == nome and v["fisicoOuEletronico"] == "fisico":
+        elif v[NOME] == nome and v["fisicoOuEletronico"] == "fisico" and v[QUANTIDADE] > 1:
             if v[ALUGAVEL] == "sim":
                 v[ALUGADO] = "sim"
                 data = str(input("Diga a data de retorno do livro[EM FORMATO DD/MM/ANO]"))
                 v[DATA_ALUGUEL] = data
+                v[QUANTIDADE] -= 1
                 print(f"Livro alugado, data de entrega {data}")
-            else:
-                print("O livro não pode ser alugado")
+        elif v[QUANTIDADE] <= 1:
+            print("Livro nao pode ser Alugado")
 
 
 def escreverJson(dado):

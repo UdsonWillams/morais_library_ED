@@ -1,0 +1,10 @@
+RELATÓRIO DO ACERVO DA MORAIS LIBRARY 
+
+Livro: jose 
+    Autor: jose pedro
+    Tipo: fisico
+    Ano da Edição: 2009
+    Assunto: drama
+    Quantidade: 10
+    Alugado:  sim
+    Fim do Aluguel SEM DADOS
