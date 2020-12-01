@@ -38,7 +38,7 @@ def menu():
 def cadastroDeLivros():
     livrosCadastro = dict()
 
-    livrosCadastro[NOME] = str(input("Digite o nome: "))
+    livrosCadastro[NOME] = str(input("Nome do Livro: "))
     livrosCadastro[FISICO_OU_ELETRONICO] = str(input("Livro fisico ou eletronico?: "))
 
     while livrosCadastro[FISICO_OU_ELETRONICO] != "fisico" and livrosCadastro[FISICO_OU_ELETRONICO] != "eletronico":
@@ -67,10 +67,12 @@ def cadastroDeLivros():
 
 
 def escreveInfoLivro(relatorio, livro):
-    if livro[NOME] == "LIVRO EXCLUIDO":
+    if len(livro) == 0:
+        pass
+    elif livro[NOME] == "LIVRO EXCLUIDO":
         pass
     else:
-        return relatorio.write(f"Livro: {livro[NOME]} \n" +
+        return relatorio.write(f"\n    Livro: {livro[NOME]} \n" +
                                f"    Autor: {livro[AUTOR]}\n" +
                                f"    Tipo: {livro[FISICO_OU_ELETRONICO]}\n" +
                                f"    Ano da Edição: {livro[ANO_LANCAMENTO]}\n" +
@@ -93,6 +95,7 @@ def atualizarQuantidade(nome, valor, dicionario):
 
 
 def removerTitulos(desejo, lista):
+    cont1 = 0
     if desejo == 1:
         ano = int(input("Qual o ano desejado para a remoção? "))
         for i in range(0, len(lista)):
@@ -109,14 +112,19 @@ def removerTitulos(desejo, lista):
             if v[NOME] == nome:
                 v.clear()
                 v[NOME] = "LIVRO EXCLUIDO"
-        print(f"Titulos com nome de {nome} removidos")
+            else:
+                cont1 += 1
+        if cont1 == len(lista):
+            print("Livro não encontrado")
+        else:
+            print(f"Titulos com nome de {nome} removidos")
 
 
 def alugarLivro(lista):
     nome = str(input("Qual o nome do livro desejado para o aluguel? "))
     for v in lista:
         if v[FISICO_OU_ELETRONICO] == "eletronico":
-            print("Livro eletronico, não pode ser alugado")
+            print("Livro eletronico, não pode ser alugado fisicamente")
         elif v[NOME] == nome and v["fisicoOuEletronico"] == "fisico" and v[QUANTIDADE] > 1:
             if v[ALUGAVEL] == "sim":
                 v[ALUGADO] = "sim"
