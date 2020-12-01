@@ -1,0 +1,14 @@
+{
+    "alugado":"nao",
+    "alugavel":"sim",
+    "anoLancamento":"2009",
+    "assunto":"drama",
+    "autor":"pedro",
+    "categoria":"NAO FORNECIDO",
+    "dataAluguel":"SEM DADOS",
+    "fisicoOuEletronico":"fisico",
+    "nome":"pedro",
+    "quantidade":5,
+    "reservavel":"nao",
+    "tematica":"NAO FORNECIDO"
+}

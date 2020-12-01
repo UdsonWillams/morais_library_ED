@@ -21,15 +21,16 @@ def menu():
          |                SEJA BEM VINDO A MORAIS LIBRARY             |
          |============================================================|
          |  1 - Adcionar livros                                       |
-         |  2 - Atualizar quantidade de livros                        |
-         |  3 - Remover titulos do acervo                             |
-         |  4 - Mostrar dados do livro                                |
-         |  5 - Buscar por exemplares[ano, titulo, autor, assunto]    |
-         |  6 - Importar dados                                        |
-         |  7 - Obter status de um livro                              |
-         |  8 - Gerar relatórios                                      |
-         |  9 - Alugar livro                                          |
-         |  10 - Sair                                                 |
+         |  2 - Cadastrar categoria e tematica                        |
+         |  3 - Atualizar quantidade de livros                        |
+         |  4 - Remover titulos do acervo                             |
+         |  5 - Mostrar dados do livro                                |
+         |  6 - Buscar por exemplares[ano, titulo, autor, assunto]    |
+         |  7 - Importar dados                                        |
+         |  8 - Obter status de um livro                              |
+         |  9 - Gerar relatórios                                      |
+         |  10 - Alugar livro                                         |
+         |  11 - Sair                                                 |
          |                                                            |  
          |============================================================|
            """)
@@ -137,10 +138,15 @@ def alugarLivro(lista):
 
 
 def escreverJson(dado):
-    with open('arquivo.json', 'w', encoding='utf8') as f:
+    with open('arquivo1.json', 'w', encoding='utf8') as f:
         json.dump(dado, f, ensure_ascii=False, sort_keys=True, indent=4, separators=(',', ':'))
 
 
-def lerJson():
-    with open('arquivo.json', 'r', encoding='utf8') as f:
+def lerJson1():
+    with open('arquivo1.json', 'r', encoding='utf8') as f:
+        return json.load(f)
+
+
+def lerJson2():
+    with open('arquivo2.json', 'r', encoding='utf8') as f:
         return json.load(f)
