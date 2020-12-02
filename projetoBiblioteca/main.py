@@ -89,23 +89,9 @@ if iniciar is True:
                           f"Quantidade disponivel: {li['quantidade']}")
 
         elif escolha == 6:  # buscar livros
-            escolha = str(input('Como você quer buscar o livro? [ano, titulo, autor, assunto] ').lower())
-            if escolha == 'ano':
-                ano = str(input('Digite o ano para a pesquisa: '))
-                for l in livros:
-                    if l['anoLancamento'] == ano:
-                        lista.append(l['nome'])
-                    else:
-                        cont2 += 1
-                if cont2 == len(livros):
-                    print("Livro não encontrado no acervo")
-                else:
-                    print("Os livros encontrados foram: ")
-                    print(lista)
-                lista.clear()
-                cont2 = 0
+            escolha = str(input('Como você quer buscar o livro? [titulo, autor, assunto] ').lower())
 
-            elif escolha == 'titulo':
+            if escolha == 'titulo':
                 titulo = input('Insira o titulo do livro: ').lower()
                 for l in livros:
                     if titulo in l['nome'].lower():
@@ -123,10 +109,11 @@ if iniciar is True:
             elif escolha == 'autor':
                 autor = input('Insira o autor do livro: ').lower()
                 for l in livros:
-                    if autor in l['autor'].lower():
-                        lista.append(l['nome'])
-                    else:
-                        cont2 += 1
+                    if l['nome'] != "LIVRO EXCLUIDO":
+                        if autor in l['autor'].lower():
+                            lista.append(l['nome'])
+                        else:
+                            cont2 += 1
                 if cont2 == len(livros):
                     print("Livro não encontrado no acervo")
                 else:
@@ -138,10 +125,11 @@ if iniciar is True:
             elif escolha == 'assunto':
                 assunto = input('Insira o assunto do livro: ').lower()
                 for l in livros:
-                    if assunto in l['assunto'].lower():
-                        lista.append(l['nome'])
-                    else:
-                        cont2 += 1
+                    if l['nome'] != "LIVRO EXCLUIDO":
+                        if assunto in l['assunto'].lower():
+                            lista.append(l['nome'])
+                        else:
+                            cont2 += 1
                 if cont2 == len(livros):
                     print("Livro não encontrado no acervo")
                 else:
@@ -168,7 +156,7 @@ if iniciar is True:
 
         elif escolha == 9: #gerando relatorios
             print('1 - Gerar relatório do acervo \n2 - Gerar relatório por categoria \n' +
-                  '3 - Gerar relatório por assunto')
+                  '3 - Gerar relatório por tematica')
 
             escolha3 = int(input('O que você deseja? '))
             if escolha3 == 1:
@@ -190,14 +178,16 @@ if iniciar is True:
                 escolha4 = input('Digite a categoria a ser gerado o relatório: [A CATEGORIA -NAO FORNECIDO- É O PADRÃO'
                                  ' CASO NÃO TENHAM CADASTRADO NENHUMA]').lower()
                 for c in livros:
-                    if c['categoria'] == escolha4:
-                        relatorio = open(f'Relatório - Categoria {escolha4}.txt', 'w', encoding="utf8")
-                        relatorio.write(f'RELATÓRIO SOBRE A CATEGORIA {escolha4.upper()}\n\n')
-                        for l in livros:
-                            if escolha4 == l['categoria']:
-                                projetoBiblioteca.biblioteca.escreveInfoLivro(relatorio, l)
-                        relatorio.close()
-                        gerarCategoria = True
+                    if c['nome'] != "LIVRO EXCLUIDO":
+                        if c['categoria'] == escolha4:
+                            relatorio = open(f'Relatório - Categoria {escolha4}.txt', 'w', encoding="utf8")
+                            relatorio.write(f'RELATÓRIO SOBRE A CATEGORIA {escolha4.upper()}\n\n')
+                            for l in livros:
+                                if l['nome'] != "LIVRO EXCLUIDO":
+                                    if escolha4 == l['categoria']:
+                                        projetoBiblioteca.biblioteca.escreveInfoLivro(relatorio, l)
+                            relatorio.close()
+                            gerarCategoria = True
                 if gerarCategoria:
                     print('Relatório gerado com sucesso!!')
                 else:
@@ -205,20 +195,22 @@ if iniciar is True:
                 gerarCategoria = None
 
             elif escolha3 == 3:
-                escolha5 = input('Digite o assunto a ser gerado o relatório: ').lower()
+                escolha5 = input('Digite a tematica a ser gerado o relatório: ').lower()
                 for d in livros:
-                    if d['assunto'] == escolha5:
-                        relatorio = open(f'Relatório - Assunto {escolha5}.txt', 'w', encoding="utf8")
-                        relatorio.write(f'RELATÓRIO SOBRE O ASSUNTO {escolha5.upper()}\n\n')
-                        for l in livros:
-                            if escolha5 == l['assunto']:
-                                projetoBiblioteca.biblioteca.escreveInfoLivro(relatorio, l)
-                        relatorio.close()
-                        gerarAssunto = True
+                    if d['nome'] != "LIVRO EXCLUIDO":
+                        if d['tematica'] == escolha5:
+                            relatorio = open(f'Relatório - tematica {escolha5}.txt', 'w', encoding="utf8")
+                            relatorio.write(f'RELATÓRIO SOBRE A TEMATICA {escolha5.upper()}\n\n')
+                            for l in livros:
+                                if l['nome'] != "LIVRO EXCLUIDO":
+                                    if escolha5 == l['tematica']:
+                                        projetoBiblioteca.biblioteca.escreveInfoLivro(relatorio, l)
+                            relatorio.close()
+                            gerarAssunto = True
                 if gerarAssunto:
                     print('Relatório gerado com sucesso!!')
                 else:
-                    print("Não foi possivel gerar o relatorio, assunto não existente")
+                    print("Não foi possivel gerar o relatorio, tematica não existente")
                 gerarAssunto = None
 
         elif escolha == 10:

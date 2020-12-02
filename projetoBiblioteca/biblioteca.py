@@ -25,7 +25,7 @@ def menu():
          |  3 - Atualizar quantidade de livros                        |
          |  4 - Remover titulos do acervo                             |
          |  5 - Mostrar dados do livro                                |
-         |  6 - Buscar por exemplares[ano, titulo, autor, assunto]    |
+         |  6 - Buscar por exemplares[titulo, autor, assunto]         |
          |  7 - Importar dados                                        |
          |  8 - Obter status de um livro                              |
          |  9 - Gerar relatórios                                      |
@@ -51,7 +51,7 @@ def cadastroDeLivros():
         livrosCadastro[ALUGAVEL] = str(input("Este livro é alugavel?: "))
         livrosCadastro[RESERVAVEL] = str(input("Este livro é reservavel?: "))
         livrosCadastro[QUANTIDADE] = int(input("Quantidade de livros: "))
-    livrosCadastro[ANO_LANCAMENTO] = str(input("Qual o ano de lançamento: "))
+    livrosCadastro[ANO_LANCAMENTO] = int(input("Qual o ano de lançamento: "))
     livrosCadastro[AUTOR] = str(input("Qual o autor do livro? "))
     livrosCadastro[ASSUNTO] = str(input("Qual o assunto do livro? "))
     livrosCadastro[ALUGADO] = "nao"
@@ -89,10 +89,14 @@ def categoriaETematica(dicionario):
 
 
 def atualizarQuantidade(nome, valor, dicionario):
+    livroEncontrado = False
     for l in dicionario:
         if l[NOME] == nome:
             l[QUANTIDADE] = valor
             print(f" O livro: {l['nome']} atualizou o valor para {l['quantidade']}")
+            livroEncontrado = True
+    if not livroEncontrado:
+        print("Livro Não encontrado")
 
 
 def removerTitulos(desejo, lista):
@@ -101,12 +105,13 @@ def removerTitulos(desejo, lista):
         ano = int(input("Qual o ano desejado para a remoção? "))
         for i in range(0, len(lista)):
             for v in lista:
-                if v[ANO_LANCAMENTO] == ano:
+                if v[ANO_LANCAMENTO] <= ano:
                     v.clear()
                     v[NOME] = "LIVRO EXCLUIDO"
                     v[FISICO_OU_ELETRONICO] = "Item excluido do acervo"
+                    v[ANO_LANCAMENTO] = 0
             ano -= 1
-        print(f"Titulos até o ano de {ano} removidos")
+        print(f"Titulos até o ano de {ano + 1} removidos")
     elif desejo == 2:
         nome = str(input("Qual o nome do livro desejado para a remoção? "))
         for v in lista:
@@ -126,14 +131,14 @@ def alugarLivro(lista):
     for v in lista:
         if v[FISICO_OU_ELETRONICO] == "eletronico":
             print("Livro eletronico, não pode ser alugado fisicamente")
-        elif v[NOME] == nome and v["fisicoOuEletronico"] == "fisico" and v[QUANTIDADE] > 1:
+        elif v[NOME] == nome and v["fisicoOuEletronico"] == "fisico" and v[QUANTIDADE] > 1 and v[NOME] != "LIVRO EXCLUIDO":
             if v[ALUGAVEL] == "sim":
                 v[ALUGADO] = "sim"
                 data = str(input("Diga a data de retorno do livro[EM FORMATO DD/MM/ANO]"))
                 v[DATA_ALUGUEL] = data
                 v[QUANTIDADE] -= 1
                 print(f"Livro alugado, data de entrega {data}")
-        elif v[QUANTIDADE] <= 1:
+        elif v[QUANTIDADE] <= 1 and v[FISICO_OU_ELETRONICO] != "eletronico" and v[NOME] != "LIVRO EXCLUIDO":
             print("Livro nao pode ser Alugado")
 
 
